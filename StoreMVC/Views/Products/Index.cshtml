@@ -1,0 +1,71 @@
+﻿@model List<Product>
+@{
+}
+
+<h2 class="text-center mb-4">List Of Products</h2>
+<div class="mb-4 text-end">
+    <a class="btn btn-primary btn-lg" asp-controller="Products" asp-action="Create">New Product</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Products</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Brand</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Image</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="9" class="text-center">No products available.</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var product in Model)
+                                    {
+                                        <tr>
+                                            <td>@product.Id</td>
+                                            <td>@product.Name</td>
+                                            <td>@product.Brand</td>
+                                            <td>@product.Category</td>
+                                            <td>@product.Price.ToString("C")</td>
+                                            <td>@product.Description</td>
+                                            <td>
+                                                <img src="/products/@product.ImageFileName" alt="@product.Name" class="img-fluid rounded" style="width: 100px; height: auto;" />
+                                            </td>
+                                            <td>@product.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a class="btn btn-warning btn-sm" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+                                                    <a class="btn btn-danger btn-sm" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
